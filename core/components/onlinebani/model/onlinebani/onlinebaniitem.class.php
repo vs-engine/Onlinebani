@@ -1,8 +1,2 @@
 <?php
-
-/**
- * @package onlinebani
- */
-class OnlinebaniItem extends xPDOSimpleObject
-{
-}
+class OnlinebaniItem extends xPDOSimpleObject {}
