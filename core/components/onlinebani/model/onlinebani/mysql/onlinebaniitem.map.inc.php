@@ -11,6 +11,8 @@ $xpdo_meta_map['OnlinebaniItem']= array (
   'fields' => 
   array (
     'name' => '',
+    'key' => '',
+    'value' => '',
     'description' => '',
     'active' => 1,
   ),
@@ -20,6 +22,22 @@ $xpdo_meta_map['OnlinebaniItem']= array (
     array (
       'dbtype' => 'varchar',
       'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+    'key' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+    'value' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
       'phptype' => 'string',
       'null' => false,
       'default' => '',
@@ -51,6 +69,38 @@ $xpdo_meta_map['OnlinebaniItem']= array (
       'columns' => 
       array (
         'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'value' => 
+    array (
+      'alias' => 'value',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'value' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'key' => 
+    array (
+      'alias' => 'key',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'key' => 
         array (
           'length' => '',
           'collation' => 'A',
