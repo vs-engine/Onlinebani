@@ -1,0 +1,44 @@
+@import "mixin";
+.row{
+  margin-right: 0;
+  margin-left: 0;
+  max-width:1920px;
+}
+.blockContentMain{
+  max-width:1920px;
+}
+main{
+  background: #ffffff;
+  h2{
+    color: #ffffff;
+    font: 700 normal 40px/40px $fonts;
+    text-align: left;
+
+
+  }
+}
+.container.container_full{
+  width:100%;
+  max-width: 1920px;
+  @include paddingLR(0,0);
+}
+.block_owner_menu{
+  @include paddingLR(0,0);
+}
+a.moreLink{
+  background: #43A8E0;
+  color: #ffffff;
+  font: 300 normal 20px/40px $fonts;
+  height: 40px;
+  @include paddingLR(15px,15px);
+  @include effectZoom(0.55s,1.0);
+  position: absolute;
+  bottom:0;
+  right:0;
+  &:hover{
+    text-decoration: none;
+    @include shadowb;
+    @include effectZoom(0.55s,1.0);
+    // margin-top: -10px;
+  }
+}
