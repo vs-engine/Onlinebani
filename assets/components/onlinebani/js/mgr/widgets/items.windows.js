@@ -29,6 +29,20 @@ Ext.extend(Onlinebani.window.CreateItem, MODx.Window, {
             anchor: '99%',
             allowBlank: false,
         }, {
+            xtype: 'textfield',
+            fieldLabel: _('onlinebani_item_key'),
+            name: 'key',
+            id: config.id + '-key',
+            anchor: '99%',
+            allowBlank: false,
+        },{
+            xtype: 'textfield',
+            fieldLabel: _('onlinebani_item_value'),
+            name: 'value',
+            id: config.id + '-value',
+            anchor: '99%',
+            allowBlank: false,
+        },{
             xtype: 'textarea',
             fieldLabel: _('onlinebani_item_description'),
             name: 'description',
@@ -83,6 +97,20 @@ Ext.extend(Onlinebani.window.UpdateItem, MODx.Window, {
             fieldLabel: _('onlinebani_item_name'),
             name: 'name',
             id: config.id + '-name',
+            anchor: '99%',
+            allowBlank: false,
+        },{
+            xtype: 'textfield',
+            fieldLabel: _('onlinebani_item_key'),
+            name: 'key',
+            id: config.id + '-key',
+            anchor: '99%',
+            allowBlank: false,
+        },{
+            xtype: 'textfield',
+            fieldLabel: _('onlinebani_item_value'),
+            name: 'value',
+            id: config.id + '-value',
             anchor: '99%',
             allowBlank: false,
         }, {

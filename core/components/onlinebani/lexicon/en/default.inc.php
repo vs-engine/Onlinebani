@@ -8,6 +8,8 @@ $_lang['onlinebani_intro_msg'] = 'You can select multiple items by holding Shift
 $_lang['onlinebani_items'] = 'Items';
 $_lang['onlinebani_item_id'] = 'Id';
 $_lang['onlinebani_item_name'] = 'Name';
+$_lang['onlinebani_item_key'] = 'Key';
+$_lang['onlinebani_item_value'] = 'Value';
 $_lang['onlinebani_item_description'] = 'Description';
 $_lang['onlinebani_item_active'] = 'Active';
 

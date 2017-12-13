@@ -8,6 +8,8 @@ $_lang['onlinebani_intro_msg'] = 'Вы можете выделять сразу 
 $_lang['onlinebani_items'] = 'Предметы';
 $_lang['onlinebani_item_id'] = 'Id';
 $_lang['onlinebani_item_name'] = 'Название';
+$_lang['onlinebani_item_key'] = 'Ключ';
+$_lang['onlinebani_item_value'] = 'Значение';
 $_lang['onlinebani_item_description'] = 'Описание';
 $_lang['onlinebani_item_active'] = 'Активно';
 

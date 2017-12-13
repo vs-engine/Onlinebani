@@ -21,6 +21,11 @@ main{
   width:100%;
   max-width: 1920px;
   @include paddingLR(0,0);
+  //--
+  .container-owner-content{
+    border:$bred;
+    width:100%;
+  }
 }
 .block_owner_menu{
   @include paddingLR(0,0);

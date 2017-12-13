@@ -182,7 +182,7 @@ Ext.extend(Onlinebani.grid.Items, MODx.grid.Grid, {
     },
 
     getFields: function () {
-        return ['id', 'name', 'description', 'active', 'actions'];
+        return ['id', 'name','key','value', 'description', 'active', 'actions'];
     },
 
     getColumns: function () {
@@ -197,6 +197,16 @@ Ext.extend(Onlinebani.grid.Items, MODx.grid.Grid, {
             sortable: true,
             width: 200,
         }, {
+            header: _('onlinebani_item_key'),
+            dataIndex: 'key',
+            sortable: true,
+            width: 200,
+        }, {
+            header: _('onlinebani_item_value'),
+            dataIndex: 'value',
+            sortable: true,
+            width: 200,
+        },{
             header: _('onlinebani_item_description'),
             dataIndex: 'description',
             sortable: false,

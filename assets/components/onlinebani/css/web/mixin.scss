@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&subset=cyrillic,cyrillic-ext,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+
+$fonts: 'Roboto', sans-serif;
+$fontsR: Righteous,Helvetica,Arial,sans-serif;
+$fontA: FontAwesome,Helvetica,Arial,sans-serif;
+/*------------border line --------------------*/
+$bred: 1px solid red;
+$bgreen: 1px solid green;
+$bblue: 1px solid blue;
+$bwhite: 1px solid #ffffff;
+$b22: 1px solid #222222;
+$bDD: 1px solid #DDDDDD;
+$bAE: 1px solid #AEADAD;
+$bE6: 1px solid #E69935;
+/*------------text color --------------------*/
+$tcFF: #ffffff;
+$tc22: #222222;
+$tc33: #333333;
+$tc99: #999999;
+$tcAE: #AEADAD;
+$tc87: #878787;
+$tc5A: #5A5A5A;
+$tc78: #787474;
+$tcE6: #E69935;
+$tcE8: #E8E8E8;
+$tcB3: #b3b3b3;
+$tcD3: #D31145;
+$tc35: #35b4d4;
+$tc2c: #2c3031;
+/*----------------mixin-----------------------*/
+@mixin border-pr($wT,$wR,$wB,$wL,$line,$color)
+{
+  border-top: $wT $line $color;
+  border-right:$wR $line $color;
+  border-bottom:$wB $line $color;
+  border-left:$wL $line $color;
+}
+@mixin opacityF($transp){
+  -moz-opacity: $transp;
+  -khtml-opacity: $transp;
+  opacity: $transp;
+}
+
+@mixin shadowb(){
+  -moz-box-shadow: 0 3px 7px 1px #424242;
+  -webkit-box-shadow: 0 3px 7px 1px #424242;
+  box-shadow: 0 3px 7px 1px #424242;
+}
+@mixin shadowb00(){
+  -moz-box-shadow: 0 0 0 0 #424242;
+  -webkit-box-shadow: 0 0 0 0 #424242;
+  box-shadow: 0 0 0 0 #424242;
+}
+@mixin shadowbR(){
+  -moz-box-shadow: 0 2px 7px 1px #dd2a1b;
+  -webkit-box-shadow: 0 2px 7px 1px #dd2a1b;
+  box-shadow: 0 2px 7px 1px #dd2a1b;
+}
+@mixin shadowbAE(){
+  -moz-box-shadow: 0 1px 5px 0 #c3c2c2;
+  -webkit-box-shadow: 0 1px 5px 0 #c3c2c2;
+  box-shadow: 0 1px 5px 0 #c3c2c2;
+}
+@mixin shadowbAEL(){
+  -moz-box-shadow: -3px 0 2px 0 #6E6E6E;
+  -webkit-box-shadow: -3px 0 2px 0 #6E6E6E;
+  box-shadow: -3px 0 2px 0 #6E6E6E;
+}
+@mixin shadowbB(){
+  -moz-box-shadow: 0 2px 5px 1px #0040aa;
+  -webkit-box-shadow: 0 2px 5px 1px #0040aa;
+  box-shadow: 0 2px 5px 1px #0040aa;
+}
+@mixin shadowbB0(){
+  -moz-box-shadow: 0 0 10px 1px #0040aa;
+  -webkit-box-shadow: 0 0 10px 1px #0040aa;
+  box-shadow: 0 0 6px 1px #AEADAD;
+}
+@mixin shadowXY0B()
+{
+  -moz-box-shadow: 0 0 5px 4px #3a3939;
+  -webkit-box-shadow: 0 0 5px 4px #3a3939;
+  box-shadow: 0 0 5px 4px #3a3939;
+}
+@mixin shadowXY0()
+{
+  -moz-box-shadow: 0 0 7px 1px #bdcbcb;
+  -webkit-box-shadow: 0 0 7px 1px #bdcbcb;
+  box-shadow: 0 0 7px 1px #bdcbcb;
+}
+@mixin shadowbXY2(){
+  -moz-box-shadow: -2px 2px 7px 1px #999999;
+  -webkit-box-shadow: -2px 2px 7px 1px #999999;
+  box-shadow: -2px -2px 7px 1px #999999;
+}
+@mixin shadowEF1BA(){
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 98%;
+  top: 80%;
+  max-width:500px;
+  background: rgba(153,153,153,0.25);
+  -webkit-box-shadow: 0 20px 2px #999999;
+  -moz-box-shadow: 0 20px 2px #999999;
+  box-shadow: 0 20px 2px rgba(153,153,153,0.25);
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+@mixin shadowEF1A(){
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+@mixin noShadow()
+{
+  -moz-box-shadow: inherit;
+  -webkit-box-shadow: inherit;
+  box-shadow: inherit;
+}
+@mixin placeHC($c){
+  input[type="text"]::-webkit-input-placeholder {color:$c;}
+  input[type="text"]::-moz-placeholder          {color:$c;}/* Firefox 19+ */
+  input[type="text"]:-moz-placeholder           {color:$c;}/* Firefox 18- */
+  input[type="text"]:-ms-input-placeholder      {color:$c;}
+}
+@mixin placeHCE($c){
+  input[type="email"]::-webkit-input-placeholder {color:$c;}
+  input[type="email"]::-moz-placeholder          {color:$c;}/* Firefox 19+ */
+  input[type="email"]:-moz-placeholder           {color:$c;}/* Firefox 18- */
+  input[type="email"]:-ms-input-placeholder      {color:$c;}
+}
+@mixin placeHCTA($c){
+  textarea::-webkit-input-placeholder {color:$c;}
+  textarea::-moz-placeholder          {color:$c;}/* Firefox 19+ */
+  textarea:-moz-placeholder           {color:$c;}/* Firefox 18- */
+  textarea:-ms-input-placeholder      {color:$c;}
+}
+@mixin pLR15(){
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@mixin mLR15(){
+  margin-left: 15px;
+  margin-right: 15px;
+}
+@mixin marginA($t,$b) {
+  margin: $t auto $b auto;
+}
+@mixin marginTB($t,$b) {
+  margin-top: $t;
+  margin-bottom: $b;
+}
+@mixin paddingTB($t,$b) {
+  padding-top: $t;
+  padding-bottom: $b;
+}
+@mixin paddingLR($t,$b) {
+  padding-left: $t;
+  padding-right: $b;
+}
+@mixin marginCL($t,$b) {
+  margin: $t 0 $b 0;
+}
+@mixin marginV($t,$r,$b,$l)
+{
+  margin: $t $r $b $l;
+}
+@mixin paddingV($t,$r,$b,$l)
+{
+  padding: $t $r $b $l;
+}
+@mixin bRadius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin conerRadius($rTL,$rTR,$rBR,$rBL){
+  border-top-left-radius: $rTL;
+  border-top-right-radius: $rTR;
+  border-bottom-left-radius: $rBL;
+  border-bottom-right-radius: $rBR;
+  -webkit-border-top-left-radius:$rTL;
+  -webkit-border-top-right-radius:$rTR;
+  -webkit-border-bottom-left-radius:$rBL;
+  -webkit-border-bottom-right-radius:$rBR;
+  -moz-border-radius-topleft:$rTL;
+  -moz-border-radius-topright:$rTR;
+  -moz-border-radius-bottomleft:$rBL;
+  -moz-border-radius-bottomright:$rBR;
+}
+@mixin rotateEl($n){
+  -moz-transform: rotate($n); /* Для Firefox */
+  -ms-transform: rotate($n); /* Для IE */
+  -webkit-transform: rotate($n); /* Для Safari, Chrome, iOS */
+  -o-transform: rotate($n); /* Для Opera */
+  transform: rotate($n);
+}
+@mixin rotateElY($n){
+  -moz-transform: rotateY($n); /* Для Firefox */
+  -ms-transform: rotateY($n); /* Для IE */
+  -webkit-transform: rotateY($n); /* Для Safari, Chrome, iOS */
+  -o-transform: rotateY($n); /* Для Opera */
+  transform: rotateY($n);
+}
+@mixin effectZoom($s,$tr)
+{
+  -o-transition: all $s ease-in-out;
+  -moz-transition: all $s ease-in-out;
+  -webkit-transition: all $s ease-in-out;
+  transition: all $s ease-in-out;
+  -o-transform: $tr;
+  -ms-transform: $tr;
+  -moz-transform: $tr;
+  -webkit-transform: $tr;
+  transform: $tr;
+}
+@mixin animTime($t)
+{
+  -webkit-animation-duration: $t;
+  -moz-animation-duration: $t;
+  animation-duration: $t;
+}
+.noPaddingLR{
+  @include paddingLR(0,0);
+}
