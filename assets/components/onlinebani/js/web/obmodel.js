@@ -37,7 +37,6 @@ var obModelObj={
     ajax:function(jsonstr,containerBack,thisEl){
         console.log(jsonstr,this.config.ajaxURL);
         jQuery.ajax({
-
             url: this.config.ajaxURL,
             type: "POST",
             async: false,

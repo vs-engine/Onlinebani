@@ -27,13 +27,6 @@ class Ob{
         }
         $arrAll=array_merge($resource,$tvs);
 
-       /*$output=$modx->runSnippet('ms2guploader',array(
-            'tid' => $this->inVar['idres']
-        ));
-
-        $arrayQueryG['gallery']=$output;
-        $arrayQueryQ['query']=$modx->parseChunk('ob.BathForm.tpl',$arrAll);
-        $arrayAll=array_merge($arrayQueryG,$arrayQueryQ);*/
         $arrayQueryQ['query']=$modx->parseChunk('ob.BathForm.tpl',$arrAll);
         echo json_encode($arrayQueryQ);
     }

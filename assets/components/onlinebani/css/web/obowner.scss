@@ -47,3 +47,14 @@ a.moreLink{
     // margin-top: -10px;
   }
 }
+//-----
+table.list-sections{
+  tr{
+    td.tdActionsSection{
+      i{
+        font: 500 normal 22px $fontA;
+        margin: 10px;
+      }
+    }
+  }
+}

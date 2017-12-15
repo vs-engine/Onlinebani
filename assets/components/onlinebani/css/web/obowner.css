@@ -70,4 +70,8 @@ a.moreLink {
     -webkit-transform: 1;
     transform: 1; }
 
+table.list-sections tr td.tdActionsSection i {
+  font: 500 normal 22px FontAwesome, Helvetica, Arial, sans-serif;
+  margin: 10px; }
+
 /*# sourceMappingURL=obowner.css.map */

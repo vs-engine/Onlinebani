@@ -8,7 +8,10 @@ function initOB(){
     $("input[data-checked^='1']").attr("checked","checked");
     $(".nav-tabs-list-bath li").removeClass("active");
     $(".nav-tabs-list-bath li a[href='#bath_"+tidPage+"']").parent("li").addClass("active");
-    obModelObj.getBathData(tidPage,".containerBack",$("#bath_"+tidPage));
+    if (typeof tidPage === "undefined"){}else{obModelObj.getBathData(tidPage,".containerBack",$("#bath_"+tidPage));}
+    if ($("table.list-sections").length>0){
+        $('table.list-sections').DataTable();
+    }
     if ($(".nav-tabs-list-bath").length>0){
         /*$(".nav-tabs-list-bath li:first-child").addClass("active");*/
         $(".tab-content .tab-pane:first-child").addClass("active");

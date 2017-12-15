@@ -34,3 +34,6 @@ $_lang['onlinebani_item_err_save'] = 'Ошибка при сохранении �
 
 $_lang['onlinebani_grid_search'] = 'Поиск';
 $_lang['onlinebani_grid_actions'] = 'Действия';
+
+//-----------------------------------
+$_lang['onlinebani_edittablesection_id'] = 'ID';

@@ -38,6 +38,11 @@
         <p class="help-block">100 символов</p>
     </div>
     <div class="form-group">
+        <label for="facebook_page">Страница фейсбук</label>
+        <input type="text" class="form-control" name="facebook_page" maxlength="100" value="[[+facebook_page]]"  id="facebook_page" placeholder="Страница фейсбук"/>
+        <p class="help-block">Отметте доп. услуги</p>
+    </div>
+    <div class="form-group">
         <label for="www_bath">Дополнительные услуги</label>
         <input type="text" class="form-control" name="dop_service" maxlength="100" value="[[+dop_service]]"  id="dop_service" placeholder="Дополнительные услуги"/>
         <p class="help-block">Отметте доп. услуги</p>
@@ -53,6 +58,7 @@
         </label>
             <p class="help-block">Доступна для бронирования?</p>
     </div>
+
     <div class="form-group">
         <button type="button" class="btn btn-default" id="seveResource">save</button>
     </div>
