@@ -23,23 +23,16 @@ Ext.extend(Onlinebani.window.CreateRegion, MODx.Window, {
     getFields: function (config) {
         return [{
             xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_name'),
-            name: 'name',
-            id: config.id + '-name',
-            anchor: '99%',
-            allowBlank: false,
-        }, {
-            xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_key'),
-            name: 'key',
-            id: config.id + '-key',
+            fieldLabel: _('onlinebani_region_id'),
+            name: 'region_id',
+            id: config.id + '-region_id',
             anchor: '99%',
             allowBlank: false,
         },{
             xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_value'),
-            name: 'value',
-            id: config.id + '-value',
+            fieldLabel: _('onlinebani_region_name_ru'),
+            name: 'name_ru',
+            id: config.id + '-name_ru',
             anchor: '99%',
             allowBlank: false,
         },{
@@ -72,11 +65,30 @@ Onlinebani.window.UpdateRegion = function (config) {
     }
     Ext.applyIf(config, {
         title: _('onlinebani_region_update'),
-        width: 550,
-        autoHeight: true,
+        width: 940,
+        height: 600,
+        autoHeight: false,
         url: Onlinebani.config.connector_url,
         action: 'mgr/region/update',
-        fields: this.getFields(config),
+        fields:{
+            xtype: 'modx-tabs',
+            deferredRender: false,
+            border: true,
+            bodyStyle: 'padding:5px;',
+            items:[{
+                title: _('onlinebani_upd_region_tab'),
+                hideMode: 'offsets',
+                layout: 'form',
+                border:false,
+                items:[
+                    this.getFields(config)
+                ]
+            },{
+                title: _('onlinebani_add_regions_tab'),
+                xtype: 'onlinebani-grid-regions_city',
+                record: config.record.object,
+            }]
+        },
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
                 this.submit()
@@ -89,42 +101,38 @@ Ext.extend(Onlinebani.window.UpdateRegion, MODx.Window, {
 
     getFields: function (config) {
         return [{
-            xtype: 'hidden',
+            xtype: 'textfield',
+            fieldLabel: _('onlinebani_region_city_id'),
             name: 'id',
             id: config.id + '-id',
-        }, {
+            readOnly: true,
+        },{
             xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_name'),
-            name: 'name',
-            id: config.id + '-name',
+            fieldLabel: _('onlinebani_region_id'),
+            name: 'region_id',
+            id: config.id + '-region_id',
             anchor: '99%',
             allowBlank: false,
         },{
             xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_key'),
-            name: 'key',
-            id: config.id + '-key',
+            fieldLabel: _('onlinebani_region_name_ru'),
+            name: 'name_ru',
+            id: config.id + '-name_ru',
             anchor: '99%',
             allowBlank: false,
         },{
-            xtype: 'textfield',
-            fieldLabel: _('onlinebani_region_value'),
-            name: 'value',
-            id: config.id + '-value',
-            anchor: '99%',
-            allowBlank: false,
-        }, {
             xtype: 'textarea',
             fieldLabel: _('onlinebani_region_description'),
             name: 'description',
             id: config.id + '-description',
-            anchor: '99%',
             height: 150,
+            anchor: '99%'
         }, {
             xtype: 'xcheckbox',
             boxLabel: _('onlinebani_region_active'),
             name: 'active',
             id: config.id + '-active',
+            checked: true,
         }];
     },
 

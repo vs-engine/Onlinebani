@@ -52,7 +52,7 @@ Ext.extend(Onlinebani.grid.Regions, MODx.grid.Grid, {
         var row = grid.getStore().getAt(rowIndex);
         var menu = Onlinebani.utils.getMenu(row.data['actions'], this, ids);
 
-        this.addContextMenuRegion(menu);
+        this.addContextMenuItem(menu);
     },
 
     createRegion: function (btn, e) {
@@ -182,28 +182,23 @@ Ext.extend(Onlinebani.grid.Regions, MODx.grid.Grid, {
     },
 
     getFields: function () {
-        return ['id', 'name','key','value', 'description', 'active', 'actions'];
+        return ['id', 'region_id','name_ru','description', 'active', 'actions'];
     },
 
     getColumns: function () {
         return [{
-            header: _('onlinebani_region_id'),
+            header: _('onlinebani_grid_id'),
             dataIndex: 'id',
             sortable: true,
-            width: 70
-        }, {
-            header: _('onlinebani_region_name'),
-            dataIndex: 'name',
+            width: 50
+        },{
+            header: _('onlinebani_region_id'),
+            dataIndex: 'region_id',
             sortable: true,
-            width: 200,
+            width: 120
         }, {
-            header: _('onlinebani_region_key'),
-            dataIndex: 'key',
-            sortable: true,
-            width: 200,
-        }, {
-            header: _('onlinebani_region_value'),
-            dataIndex: 'value',
+            header: _('onlinebani_region_name_ru'),
+            dataIndex: 'name_ru',
             sortable: true,
             width: 200,
         },{
@@ -295,3 +290,7 @@ Ext.extend(Onlinebani.grid.Regions, MODx.grid.Grid, {
     },
 });
 Ext.reg('onlinebani-grid-regions', Onlinebani.grid.Regions);
+
+
+//--------------grid regions_city
+
