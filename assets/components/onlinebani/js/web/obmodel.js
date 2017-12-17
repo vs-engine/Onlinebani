@@ -56,50 +56,6 @@ var obModelObj={
                         if (response['gallery']){
                             var getContainer=thisEl.attr("href");
                             $(containerBack).children(".imgGalery").html('[[!ms2guploader?&tid=`31`]]----');
-                            /*typeof $.fn.sortable == 'function' || document.write('<script src="/assets/components/ms2guploader/vendor/jquery-ui-sortable/jquery-ui-1.10.4.sortable.min.js"><\/script>');
-                            typeof $.fn.ajaxForm == 'function' || document.write('<script src="/assets/components/ms2guploader/vendor/jquery-form/jquery.form.js"><\/script>');
-                            typeof $.fn.jGrowl == 'function' || document.write('<script src="/assets/components/ms2guploader/vendor/jgrowl/jquery.jgrowl.min.js"><\/script>');
-                            typeof $.fn.Plupload == 'function' || document.write('<script src="/assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js"><\/script>');
-                            typeof $.fn.Plupload == 'function' || document.write('<script src="/assets/components/ms2guploader/vendor/plupload/js/i18n/ru.js"><\/script>');*/
-                           /* + var s1="<script type='text/javascript' src='/assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js'></script>";
-                            + var s2="<script type='text/javascript' src='/assets/components/ms2guploader/vendor/curl/curl.js'></script>";
-                           + var s3="<script type='text/javascript' src='/assets/components/ms2guploader/js/web/ms2guploader.js'></script>";
-                           // + var s4="<script type='text/javascript src='/assets/components/ms2guploader/vendor/jquery-ui-sortable/jquery-ui-1.10.4.sortable.min.js'></script>";
-                           /* + var s5="<script type='text/javascript src='/assets/components/ms2guploader/vendor/jquery-form/jquery.form.js'></script>";
-                            + var s6="<script type='text/javascript src='/assets/components/ms2guploader/vendor/jgrowl/jquery.jgrowl.min.js'></script>";
-                            + var s7="<script type='text/javascript src='/assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js'></script>";
-                            + var s8="<script type='text/javascript src='/assets/components/ms2guploader/vendor/plupload/js/i18n/ru.js'></script>";
-                            $("body").append("<div class='ajaxCss'>"+s1+s2+s3+"</div>");*/
-
-                           /*$.getScript("/assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js", function(){
-                                console.log("plupload.full - подключен");
-                            });*/
-                            /*$.getScript("/assets/components/ms2guploader/js/web/ms2guploader.js", function(){
-                                console.log("ms2guploader - подключен");
-                            });*/
-                            /*$.getScript("/assets/components/ms2guploader/vendor/curl/curl.js", function(){
-                                console.log("curl - подключен");
-                            });
-
-
-                            $.getScript("/assets/components/ms2guploader/vendor/jquery-ui-sortable/jquery-ui-1.10.4.sortable.min.js", function(){
-                                console.log("jquery-ui-sortable - подключен");
-                            });
-                            $.getScript("/assets/components/ms2guploader/vendor/jquery-form/jquery.form.js", function(){
-                                console.log("jquery-form - подключен");
-                            });
-                            $.getScript("/assets/components/ms2guploader/vendor/jgrowl/jquery.jgrowl.min.js", function(){
-                                console.log("jgrowlform - подключен");
-                            });
-                            $.getScript("/assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js", function(){
-                                console.log("plupload. - подключен");
-                            });
-                            $.getScript("/assets/components/ms2guploader/vendor/plupload/js/i18n/ru.js", function(){
-                                console.log("i18n - подключен");
-                            });*/
-
-
-
                         }
                 }
 

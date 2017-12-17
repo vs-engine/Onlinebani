@@ -59,6 +59,8 @@ class OnlinebaniHomeManagerController extends modExtraManagerController
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/onlinebani.js');
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/misc/utils.js');
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/misc/combo.js');
+        $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/widgets/regions.grid.js');
+        $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/widgets/regions.windows.js');
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/widgets/items.grid.js');
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/widgets/items.windows.js');
         $this->addJavascript($this->Onlinebani->config['jsUrl'] . 'mgr/widgets/home.panel.js');

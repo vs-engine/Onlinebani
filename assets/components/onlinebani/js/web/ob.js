@@ -17,6 +17,9 @@ function initOB(){
         $(".tab-content .tab-pane:first-child").addClass("active");
     }
     //----
+    $(document).on('click','.disable-enable',function(){
+        obModelObj.saveBathData($(this).next("form"));
+    });
 
     //---
     if ($(".nav-tabs-list-bath li a").length>0){

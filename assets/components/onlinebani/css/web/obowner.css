@@ -70,8 +70,17 @@ a.moreLink {
     -webkit-transform: 1;
     transform: 1; }
 
+table.list-sections tr td {
+  vertical-align: middle; }
 table.list-sections tr td.tdActionsSection i {
-  font: 500 normal 22px FontAwesome, Helvetica, Arial, sans-serif;
+  font: 500 normal 30px FontAwesome, Helvetica, Arial, sans-serif;
   margin: 10px; }
+table.list-sections tr.unpublished td {
+  background: #f7f7f7;
+  -moz-opacity: 0.6;
+  -khtml-opacity: 0.6;
+  opacity: 0.6; }
+table.list-sections .formEnDis {
+  display: inline-block; }
 
 /*# sourceMappingURL=obowner.css.map */

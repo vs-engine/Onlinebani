@@ -50,11 +50,25 @@ a.moreLink{
 //-----
 table.list-sections{
   tr{
+    td{
+      vertical-align: middle;
+    }
     td.tdActionsSection{
       i{
-        font: 500 normal 22px $fontA;
+        font: 500 normal 30px $fontA;
         margin: 10px;
       }
     }
+    &.unpublished{
+      td{
+        background: #f7f7f7;
+        @include opacityF(0.6);
+      }
+    }
+
+  }
+  //---
+  .formEnDis{
+    display: inline-block;
   }
 }

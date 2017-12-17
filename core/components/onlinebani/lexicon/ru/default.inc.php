@@ -5,7 +5,7 @@ $_lang['onlinebani'] = 'Onlinebani';
 $_lang['onlinebani_menu_desc'] = 'Пример расширения для разработки.';
 $_lang['onlinebani_intro_msg'] = 'Вы можете выделять сразу несколько предметов при помощи Shift или Ctrl.';
 
-$_lang['onlinebani_items'] = 'Предметы';
+$_lang['onlinebani_items'] = 'Настройки';
 $_lang['onlinebani_item_id'] = 'Id';
 $_lang['onlinebani_item_name'] = 'Название';
 $_lang['onlinebani_item_key'] = 'Ключ';
@@ -37,3 +37,7 @@ $_lang['onlinebani_grid_actions'] = 'Действия';
 
 //-----------------------------------
 $_lang['onlinebani_edittablesection_id'] = 'ID';
+
+//-----------------------------------
+$_lang['onlinebani_items_region'] = 'Районы города';
+$_lang['onlinebani_intro_msg_region'] = 'Добавляем административные районы города';

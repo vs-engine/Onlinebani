@@ -49,4 +49,7 @@ class Ob{
         ));*/
         echo json_encode($arrayQuery);
     }
+    public function getSectionData($invar,$modx){
+
+    }
 }

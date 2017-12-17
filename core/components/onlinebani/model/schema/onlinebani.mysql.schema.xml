@@ -22,5 +22,28 @@
             <column key="active" length="" collation="A" null="false"/>
         </index>
     </object>
+    <object class="OnlinebaniRegion" table="onlinebani_region" extends="xPDOSimpleObject">
+        <field key="region_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="name_ru" dbtype="varchar" precision="128" phptype="varchar" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="text" null="true" default=""/>
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
 
+        <index alias="region_id" name="region_id" primary="false" unique="false" type="BTREE">
+            <column key="region_id" length="" collation="A" null="false"/>
+        </index>
+        <composite alias="GlCity" class="glCity" local="region_id" foreign="region_id" cardinality="many" owner="local"/>
+    </object>
+    <object class="OnlinebaniRegionsCity" table="onlinebani_regions_city" extends="xPDOSimpleObject">
+        <field key="regionc_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="namec_ru" dbtype="varchar" precision="128" phptype="varchar" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="text" null="true" default=""/>
+        <field key="lat" dbtype="decimal" precision="10,5" phptype="float" null="false" default="0" />
+        <field key="lon" dbtype="decimal" precision="10,5" phptype="float" null="false" default="0" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+
+        <index alias="regionc_id" name="regionc_id" primary="false" unique="false" type="BTREE">
+            <column key="regionc_id" length="" collation="A" null="false"/>
+        </index>
+        <composite alias="OnlinebaniRegion" class="OnlinebaniRegion" local="regionc_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
 </model>

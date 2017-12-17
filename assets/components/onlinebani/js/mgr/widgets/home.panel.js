@@ -29,6 +29,16 @@ Onlinebani.panel.Home = function (config) {
                     xtype: 'onlinebani-grid-items',
                     cls: 'main-wrapper',
                 }]
+            },{
+                title: _('onlinebani_items_region'),
+                layout: 'anchor',
+                items: [{
+                    html: _('onlinebani_intro_msg_region'),
+                    cls: 'panel-desc',
+                }, {
+                    xtype: 'onlinebani-grid-regions',
+                    cls: 'main-wrapper',
+                }]
             }]
         }]
     });
