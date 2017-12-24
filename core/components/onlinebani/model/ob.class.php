@@ -52,4 +52,32 @@ class Ob{
     public function getSectionData($invar,$modx){
 
     }
+    public function addDopOptions($invar,$modx)
+    {
+        $this->inVar=$invar;
+        $option = $modx->newObject('msProductOption', array(
+            'product_id' => $this->inVar['product_id'],
+            'key' => $this->inVar['key'],
+            'value' => $this->inVar['value']
+        ));
+        if ($option->save()){
+            $prod = $modx->getObject('msProduct', $this->inVar['product_id']);
+            $prod->set($this->inVar['key'],$this->inVar['jsonStr']);
+            if ($prod->save()){$arrayQuery['query']="options saved";}
+
+        }else{$arrayQuery['query']="options not saved";}
+        echo json_encode($arrayQuery);
+    }
+    public function delDopOptions($invar,$modx){
+        $this->inVar=$invar;
+        $option = $modx->removeCollection('msProductOption', array(
+            'product_id' => $this->inVar['product_id'],
+            'key' => $this->inVar['key'],
+            'value' => $this->inVar['value']
+        ));
+        if ($option){
+            $arrayQuery['query']="options deleted";
+        }else{$arrayQuery['query']="options not deleted - ".count($option);}
+        echo json_encode($arrayQuery);
+    }
 }

@@ -1,0 +1,1 @@
+<li class="select2-search-choice"><div>[[+value]]</div><a href="#" class="select2-search-choice-close" tabindex="-1"></a></li>

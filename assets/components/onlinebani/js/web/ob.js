@@ -53,5 +53,30 @@ function initOB(){
         obModelObj.saveBathData($(this).parents("form"));
     });
     ///-----------------
+    //-----ms2form plagins sields
+    $(document).on('click','.ms2formPlug .select2-search-choice-close',function(){
+        obModelObj.ms2formPlugDel($(this),$(this).attr("data-key"));
+    });
+    $(document).on('focus','.select2-search-field input.select2-input',function(){
+        $(this).parents("li").css({"width":"100%","display":"inline-block"});
+        $(this).css({"width":"100%"});
+    });
+    $(document).on('blur','.select2-search-field input.select2-input',function(){
+        $(this).parents("li").css({"width":"auto"});
+        $(this).css({"width":"20px"});
+        var newElText=$(this).val();
+        $(this).val("");
+        if (newElText!="")
+        {
+            var pid=$(this).parents("li").attr("data-pid");
+            var key=$(this).parents("li").attr("data-key");
+            var newLi='<li class="select2-search-choice"><div>'+newElText+'</div><a data-pid="'+pid+'" data-key="'+key+'" class="select2-search-choice-close" tabindex="-1"></a></li>';
+            $(this).parents("li").before(newLi);
+            obModelObj.ms2formPlugAddVal($(this).parents("ul").find("li.select2-search-choice:last"));
+        }
+
+
+    });
+
 
 }
