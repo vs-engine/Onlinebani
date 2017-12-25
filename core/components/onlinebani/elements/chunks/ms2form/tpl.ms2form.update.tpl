@@ -34,8 +34,30 @@
         <label>Тпи бани</label>
         [[+type_pait_show]]
     </div>
-
-
+    <div class="form-group ms2formPlug">
+        <label>Район города</label>
+        [[!getElPage?
+            &case=`getMs2FormElVal`
+            &formel=`select`
+            &class=`OnlinebaniRegion`
+            &where=`"region_id":[[#[[#[[!#get.pid]].parent]].tv.city_bath]]`
+            &active=`1`
+            &keyField=`city_region`
+        ]]
+        <input type="text" value="Район города" name="city_region"/>
+    </div>
+    <div class="form-group ms2formPlug">
+        <label>Вместимость</label>
+        <input type="number" min="1" value="[[+section_capacity]]" name="section_capacity"/>
+    </div>
+    <div class="form-group ms2formPlug">
+        <label>Дополнительная вместиомсть за плату (дополнительно к базовой вместимости)</label>
+        <input type="number" min="1" value="[[+section_extra_capacity]]" name="section_extra_capacity"/>
+    </div>
+    <div class="form-group ms2formPlug">
+        <label>Цена за дополнительного человека</label>
+        <input type="number" min="1" value="[[+section_extra_price]]" name="section_extra_price"/>
+    </div>
     <div class="form-group popover-help" id="formGroupContent">
         <input id="content" name="content" type="hidden" value="[[+content]]"/>
         [[$tpl.ms2form.editor.[[+editor]]?content=`[[+content]]`]]

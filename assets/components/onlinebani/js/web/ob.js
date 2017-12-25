@@ -77,6 +77,9 @@ function initOB(){
 
 
     });
+    $(document).on('change','.changed_elements',function(){
+        obModelObj.changed_elements($(this));
+    });
 
 
 }

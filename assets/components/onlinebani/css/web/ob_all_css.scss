@@ -3,8 +3,10 @@ main{
   margin-top: 80px;
 }
 .select2-search-field{
-  width:60px !important;
+  min-width:60px !important;
+  width:100% !important;
 }
 .select2-search-field input.select2-input{
-  width:60px  !important;
+  min-width:60px  !important;
+  width: 100% !important;
 }

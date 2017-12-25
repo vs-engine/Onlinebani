@@ -76,8 +76,55 @@ class Ob{
             'value' => $this->inVar['value']
         ));
         if ($option){
-            $arrayQuery['query']="options deleted";
+            $prod = $modx->getObject('msProduct', $this->inVar['product_id']);
+            $prod->set($this->inVar['key'],$this->inVar['jsonStr']);
+            if ($prod->save()){$arrayQuery['query']="options deleted";}
+
         }else{$arrayQuery['query']="options not deleted - ".count($option);}
         echo json_encode($arrayQuery);
+    }
+    //---------ms2form additional fields (options)
+    public function getMs2FormElVal($invar,$modx){
+        $this->modx->addPackage('onlinebani', $modx->getOption('onlinebani_core_path').'model/');
+        $this->inVar=$invar;
+
+        switch ($this->inVar['keyField']){
+            case "city_region":
+                    //$a=array();
+                    $qTS = $this->modx->newQuery('OnlinebaniRegion');
+                    $qTS=json_decode("{".$this->inVar['where']."}");
+
+
+                    if ($this->modx->getCount('OnlinebaniRegion', $qTS)>0){
+                        foreach(json_decode("{".$this->inVar['where']."}") as $key=>$val){
+
+                        }
+                        $aq=array($key=>$val);
+                        $res=$this->modx->getObject('OnlinebaniRegion', $aq);
+                        $aqr=array('regionc_id'=>$res->id);
+                        $resArr=$this->modx->getCollection('OnlinebaniRegionsCity', $aqr);
+                        $this->createFormEl($this->inVar['formel'],$resArr,$this->inVar['keyField']);
+                        //echo($this->modx->getCount('OnlinebaniRegionsCity', $aqr)."----".$res->id."--2--".$this->modx->getCount('OnlinebaniRegion', $qTS));
+                    }
+                    /*
+
+
+                    echo("===".$this->modx->getCount('OnlinebaniRegion', $qTS));*/
+                break;
+        }
+    }
+
+    public function createFormEl($formel,$resArr,$keyField){
+        switch($formel){
+            case "select":
+                $tplOuter='ms2formOuterSelect.tpl';
+                $tplInner='ms2formInnerSelect.tpl';
+                $tplInnerBack="";
+                foreach($resArr as $keyr){
+                    $tplInnerBack.=$this->modx->getChunk($tplInner,array("title"=>$keyr->namec_ru,"value"=>$keyr->namec_ru));
+                }
+                echo($this->modx->getChunk($tplOuter,array("inner"=>$tplInnerBack,"keyField"=>$keyField)));
+                break;
+        }
     }
 }

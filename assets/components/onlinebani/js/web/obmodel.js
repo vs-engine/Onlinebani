@@ -15,9 +15,10 @@ var obModelObj={
         var jsonstr=this.serializeForm(elForm);
         this.ajax(jsonstr,"console",elForm);
     },
-    delDopOptions:function(pid,key,value){
-        var jsonstr={"casePar":"delDopOptions","product_id":pid,"key":key,"value":value};
+    delDopOptions:function(pid,key,value,jsonStr){
+        var jsonstr={"casePar":"delDopOptions","product_id":pid,"key":key,"value":value,"jsonStr":jsonStr};
         console.log(jsonstr);
+
         this.ajax(jsonstr,"consoleText","elForm");
     },
     addDopOptions:function(pid,key,value,jsonStr){
@@ -95,29 +96,41 @@ var obModelObj={
     },
     ms2formPlugDel: function(el,key){
         this.ms2formPlugDelVal(el);
-        var value=el.parents("li").children("div").text();
-        this.delDopOptions(el.attr("data-pid"),el.attr("data-key"),value);
         el.parents("li").remove();
     },
     ms2formPlugDelVal:function(el){
+
         var replaceText=el.parents("li").children("div").text();
         var valEl=el.parents(".ms2formPlug").find("input.ms2formPlugVal").val();
+
         valEl=valEl.replace(replaceText,'');
         valEl=valEl.replace(",,",',');
         var last=valEl;
+        var value=el.parents("li").children("div").text();
        if (last.substr(last.length-1,1)==","){
            el.parents(".ms2formPlug").find("input.ms2formPlugVal").val(valEl.slice(0, -1));
        }
         else{
            el.parents(".ms2formPlug").find("input.ms2formPlugVal").val(valEl);
        }
+        alert(el.parents(".ms2formPlug").find("input.ms2formPlugVal").val().split(","));
+        var strJson=el.parents(".ms2formPlug").find("input.ms2formPlugVal").val().split(",");
+        var strJsonArr="";
+        $.each(strJson, function( index, value1 ) {
+            strJsonArr+='"'+value1+'",';
+        });
+        strJsonArr=strJsonArr.slice(0,-1);
+        var jsonStr="["+strJsonArr+"]";
+        alert(jsonStr);
+
+        this.delDopOptions(el.attr("data-pid"),el.attr("data-key"),value,jsonStr);
 
     },
     ms2formPlugAddVal:function(el){
         var valEl=el.parents(".ms2formPlug").find("input.ms2formPlugVal").val();
 
         var nText=el.children("div").text();
-        alert(nText+"-----"+el.parents(".ms2formPlug").children("label").text());
+        //alert(nText+"-----"+el.parents(".ms2formPlug").children("label").text());
         if (valEl==""){
             el.parents(".ms2formPlug").find("input.ms2formPlugVal").val(nText);
         }
@@ -132,8 +145,17 @@ var obModelObj={
         var jsonStr="["+strJsonArr+"]";
         var pid=el.children("a.select2-search-choice-close").attr("data-pid");
         var key=el.children("a.select2-search-choice-close").attr("data-key");
-        alert(jsonStr);
+        //alert(jsonStr);
         this.addDopOptions(pid,key,nText,jsonStr);
+    },
+    changed_elements:function(el){
+        console.log(el.attr("name"));
+        if (el.children("option:selected").val()=="sel"){}
+        else{
+            var arrPar=el.attr("name").split("|");
+            $("input[name="+arrPar[0]+"]").val(el.children("option:selected").val());
+
+        }
     },
     repleceSymbol: function(el){
         el.each(function(){
