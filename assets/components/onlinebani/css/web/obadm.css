@@ -1,3 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&subset=cyrillic,cyrillic-ext,latin-ext");
+@import url("https://fonts.googleapis.com/css?family=Righteous");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+/*------------border line --------------------*/
+/*------------text color --------------------*/
+/*----------------mixin-----------------------*/
+.noPaddingLR {
+  padding-left: 0;
+  padding-right: 0; }
 
+.requiredErr {
+  border: 1px solid red; }
+
+table.list-adminBath tr td {
+  vertical-align: middle; }
+table.list-adminBath tr td.tdActionsSection i {
+  font: 500 normal 30px FontAwesome, Helvetica, Arial, sans-serif;
+  margin: 10px; }
+table.list-adminBath tr.unpublished td {
+  background: #f7f7f7;
+  -moz-opacity: 0.6;
+  -khtml-opacity: 0.6;
+  opacity: 0.6; }
+table.list-adminBath .formEnDis {
+  display: inline-block; }
+
+table.tablepe tr td i.fa {
+  cursor: pointer;
+  font: 400 normal 18px FontAwesome, Helvetica, Arial, sans-serif;
+  display: block; }
+
+.block_time {
+  padding-left: 0;
+  padding-right: 0; }
+
+.priceValWD table {
+  width: 90%; }
+  .priceValWD table tr th, .priceValWD table tr td {
+    padding: 4px; }
 
 /*# sourceMappingURL=obadm.css.map */

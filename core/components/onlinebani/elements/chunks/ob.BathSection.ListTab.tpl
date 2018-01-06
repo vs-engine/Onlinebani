@@ -7,7 +7,7 @@
             ,'editor'=>'bootstrapMarkdown'
             ,'templates'=>'1==Базовый,2==Дополнительный,6==Отделение'
             ,'template'=>'6'
-            ,'allowedFields'=>'parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail'
+            ,'allowedFields'=>'workday_price_list,weekend_price_list,weekend_price,weekend_timeend,weekend_timestart,work_days_timeend,work_days_timestart,parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail,admin_bath,dop_options,type_pait,city_region,section_capacity,section_extra_capacity,section_extra_price,sanitary_day,price'
             ,'requiredFields'=>'parent,pagetitle,content'
             ,'where' => ' { "Data.owner_mail:=":$_modx->user.email } '
         ])}
@@ -17,7 +17,7 @@
             ,'parents'=>$id.parent
             ,'editor'=>'bootstrapMarkdown'
             ,'templates'=>'6==Бани отделения'
-            ,'allowedFields'=>'parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail'
+            ,'allowedFields'=>'workday_price_list,weekend_price_list,weekend_price,weekend_timeend,weekend_timestart,work_days_timeend,work_days_timestart,parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail,admin_bath,dop_options,type_pait,city_region,section_capacity,section_extra_capacity,section_extra_price,sanitary_day,price'
             ,'requiredFields'=>'parent,pagetitle,content'
             ,'where' => ' { "Data.owner_mail:=":$_modx->user.email } '
         ])}

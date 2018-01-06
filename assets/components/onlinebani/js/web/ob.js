@@ -4,6 +4,7 @@ function initOB(){
 
 
     obModelObj.initFunction();
+
     var tidPage = obModelObj.getUrlVar('tidPage');
     $("input[data-checked^='1']").attr("checked","checked");
     $(".nav-tabs-list-bath li").removeClass("active");
@@ -11,6 +12,18 @@ function initOB(){
     if (typeof tidPage === "undefined"){}else{obModelObj.getBathData(tidPage,".containerBack",$("#bath_"+tidPage));}
     if ($("table.list-sections").length>0){
         $('table.list-sections').DataTable();
+    }
+    if ($("table.list-adminBath").length>0){
+        setTimeout(showTT,2000);
+        function showTT(){
+            $('table.list-adminBath').DataTable({
+                language:{
+                    "zeroRecords": "Вы еще не добавили администраторов банного комплекса"
+                },
+                "bDestroy": true
+            });
+        }
+
     }
     if ($(".nav-tabs-list-bath").length>0){
         /*$(".nav-tabs-list-bath li:first-child").addClass("active");*/
@@ -80,6 +93,50 @@ function initOB(){
     $(document).on('change','.changed_elements',function(){
         obModelObj.changed_elements($(this));
     });
+    //---admin bath
+    $(document).on('click','#obAddAdminBathBtn',function(){
+        obModelObj.addAdminBath($(this).parents("form"));
+    });
+    $(document).on('change','form.editfields input[name="chpasswd"]',function(){
+        if ($(this).is(":checked")){
+            $(this).parents("form").find("[name='password']").removeAttr("disabled").addClass("required");
+            $(this).parents("form").find("[name='password2']").removeAttr("disabled").addClass("required");
+            obModelObj.requiredFields("st",$(this).parents("form"));
+        }
+        else{
+            $(this).parents("form").find("[name='password']").attr("disabled","disabled").removeClass("required");
+            $(this).parents("form").find("[name='password2']").attr("disabled","disabled").removeClass("required");
+            obModelObj.requiredFields("st",$(this).parents("form"));
+        }
+        console.log("fff");
 
+    });
+    //--nexsus_fields
+    $(document).on('change','.nexus_fields select',function(){
+        obModelObj.nexusFields($(this),"add","#ms2formAdmin_bath");
+    });
+    //---param edit
+    $(document).on('click','table.tablepe .actiosave i',function(){
+        obModelObj.tableParamEdit($(this),"save");
+    });
+    $(document).on('click','table.tablepe .actiondel i',function(){
+        obModelObj.tableParamEdit($(this),"del");
+    });
+    $(document).on('click','table.tablepe .addFields i',function(){
+        obModelObj.tableParamEdit($(this),"addFields");
+    });
+    //--dara picker
+    $(document).on('change','input.time',function(){
+        obModelObj.strToTime($(this));
+    });
+    $(document).on('click','.btn-ctreateTimeTabW',function(){
+        obModelObj.ctreateTimeTab("work");
+    });
+    $(document).on('click','.btn-ctreateTimeTabWE',function(){
+        obModelObj.ctreateTimeTab("weekend");
+    });
+    $(document).on('change','table.tablepe input.para2',function(){
+        obModelObj.tableParamEdit($(this),"save");
+    });
 
 }

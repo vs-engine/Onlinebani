@@ -1,0 +1,58 @@
+@import "mixin";
+.requiredErr{
+  border:1px solid red;
+}
+//-----
+table.list-adminBath{
+  tr{
+    td{
+      vertical-align: middle;
+    }
+    td.tdActionsSection{
+      i{
+        font: 500 normal 30px $fontA;
+        margin: 10px;
+      }
+    }
+    &.unpublished{
+      td{
+        background: #f7f7f7;
+        @include opacityF(0.6);
+      }
+    }
+
+  }
+  //---
+  .formEnDis{
+    display: inline-block;
+  }
+}
+
+//---
+table.tablepe{
+  tr{
+    td{
+      i.fa{
+        cursor: pointer;
+        font: 400 normal 18px $fontA;
+        display: block;
+      }
+    }
+  }
+
+}
+
+//-----
+.block_time{
+  @include paddingLR(0,0);
+}
+.priceValWD{
+  table{
+    width:90%;
+    tr{
+      th,td{
+        padding: 4px;
+      }
+    }
+  }
+}

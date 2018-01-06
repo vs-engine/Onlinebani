@@ -1,0 +1,1 @@
+<tr ><td class="dataTables_empty" colspan="7" align="center"><b>[[+message]]</b></td></tr>

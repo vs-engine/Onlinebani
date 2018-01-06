@@ -2,6 +2,9 @@
 class Ob{
 
     public $inVar=array();
+    private $where="";
+    public $whereArr=array();
+    public $tpl="";
     function __construct(modX &$modx) {
         $this->modx =& $modx;
 
@@ -83,6 +86,21 @@ class Ob{
         }else{$arrayQuery['query']="options not deleted - ".count($option);}
         echo json_encode($arrayQuery);
     }
+    public function getTimeResource($invar,$modx){
+        $this->inVar=$invar;
+        $prod = $this->modx->getCollection('msProduct', array('id' => $this->inVar['id']));
+        $output=array();
+        $strb=array();
+        foreach ($prod as $ke => $res) {
+            $output[]= $res->get($this->inVar['field']);
+            foreach ($output[0] as $k =>$v){
+                $nv=explode("==",$v);
+                $strb[]=['time'=>$nv[0],'title'=>$nv[0]." <br/> ". $nv[1]."руб."];
+            }
+        }
+
+        echo json_encode($strb);
+    }
     //---------ms2form additional fields (options)
     public function getMs2FormElVal($invar,$modx){
         $this->modx->addPackage('onlinebani', $modx->getOption('onlinebani_core_path').'model/');
@@ -111,6 +129,26 @@ class Ob{
 
                     echo("===".$this->modx->getCount('OnlinebaniRegion', $qTS));*/
                 break;
+            case "admin_bath":
+                $this->inVar=$invar;
+
+                $q = $modx->newQuery('modUser');
+                $q->innerJoin('modUserProfile', 'Profile');
+                $q->where(array("Profile.fax"=>(string)$this->inVar['where']));
+                $q->select(array(
+                    'Profile.*',
+                    'modUser.*',
+                ));
+                $s = $q->prepare();
+                $s->execute();
+                $tplRes="";
+                $this->tpl=$this->inVar['tpl'];
+                while($row = $s->fetch(PDO::FETCH_ASSOC)){
+                    $tplRes.=$this->modx->getChunk($this->tpl,$row);
+
+                }
+                echo("<select name='sel_adminBath' data-hidden='".$this->inVar['hidden']."' data-pid='".$this->inVar['pid']."' data-key='".$this->inVar['keyField']."'><option value='-1'>Выбрать</option>".$tplRes."</select>");
+                break;
         }
     }
 
@@ -129,4 +167,129 @@ class Ob{
     }
 
     //--Admin Bath
+    public function showAdminBath($invar,$modx){
+        $this->inVar=$invar;
+        $q = $modx->newQuery('modUser');
+        $q->innerJoin('modUserProfile', 'Profile');
+        $q->where(array("Profile.fax"=>$this->inVar['where']));
+        $q->select(array(
+            'Profile.*',
+            'modUser.*',
+        ));
+        $s = $q->prepare();
+        $s->execute();
+        $tplRes="";
+        $this->tpl=$this->inVar['tpl'];
+        while($row = $s->fetch(PDO::FETCH_ASSOC)){
+            $tplRes.=$this->modx->getChunk($this->tpl,$row);
+
+        }
+        echo($tplRes);
+    }
+    public function addAdminBath($invar,$modx){
+        $this->inVar=$invar;
+        $count = $this->modx->getCount('modUser', array('username' => $this->inVar['username']));
+        //$row=$this->getUserInfo("Profile.email",$this->inVar['email'],$modx);
+        /*$q = $modx->newQuery('modUser');
+        $q->innerJoin('modUserProfile', 'Profile');
+        $q->where(array("Profile.email"=>$this->inVar['email']));
+        $q->select(array(
+            'Profile.*',
+            'modUser.*',
+        ));
+        $s = $q->prepare();
+        $s->execute();
+        $row = $s->fetch(PDO::FETCH_ASSOC);*/
+        $query = $modx->newQuery('modUserProfile', array(
+            'email' => $this->inVar['email'],
+        ));
+        $query->select('email');
+        $email = $modx->getValue($query->prepare());
+        if($count > 0){
+            $arrayQuery['alert']=1;
+            $arrayQuery['alertField']="username";
+            $arrayQuery['query']="Логин занят";
+
+        }
+        else if($modx->getValue($query->prepare())){
+            $arrayQuery['alert']=1;
+            $arrayQuery['alertField']="email";
+            $arrayQuery['query']="Такой элекронный адрес уже существует--".$this->inVar['email'];
+        }
+        else{
+            $user = $modx->newObject('modUser');
+            $user->set('username', $this->inVar['username']);
+            $user->set('password', $this->inVar['password']);
+            $user->save();
+            $profile = $modx->newObject('modUserProfile');
+            $profile->set('fullname', $this->inVar['fullname']);
+            $profile->set('email', $this->inVar['email']);
+            $profile->set('phone', $this->inVar['phone']);
+            $profile->set('fax', $this->inVar['fax']);
+            $user->addOne($profile);
+            $profile->save();
+            $user->save();
+            //--profile
+            $group = $modx->getObject('modUserGroup', array('name' => 'AdminBath'));
+            $groupMember = $modx->newObject('modUserGroupMember');
+            $groupMember->set('user_group', $group->get('id'));
+            $groupMember->set('role', 1); // 1 - это членство с ролью Member
+            $groups[] = $groupMember;
+            $user->addMany($groups);
+            $user->save();
+            $arrayQuery['query']="Администратор создан";
+        }
+        echo json_encode($arrayQuery);
+    }
+    public function saveAdminBathData($invar,$modx){
+        $this->inVar=$invar;
+        $caseActive=array_shift($this->inVar);
+        switch ($caseActive){
+            case "active":
+                $user = $modx->getObject('modUser',$this->inVar["idres"]);
+                $user->set('active', $this->inVar['active']);
+                $user->save();
+                break;
+            case "allData":
+                $user = $modx->getObject('modUser',$this->inVar["idres"]);
+                $user->set('username', $this->inVar['username']);
+                if (!empty($this->inVar['password'])){
+                    $user->set('password', $this->inVar['password']);
+                }
+
+                $user->save();
+                $profile = $modx->getObject('modUserProfile',$this->inVar["idres"]);
+                $profile->set('fullname', $this->inVar['fullname']);
+                $profile->set('email', $this->inVar['email']);
+                $profile->set('phone', $this->inVar['phone']);
+                $profile->set('fax', $this->inVar['fax']);
+                $user->addOne($profile);
+                if ($profile->save()){
+                    $arrayQuery['query']="Данные обновлены";
+                }else{
+                    $arrayQuery['query']="Данные не обновлены";
+                }
+                //--profile
+
+                echo json_encode($arrayQuery);
+                break;
+        }
+    }
+    private function getUserInfo($sf,$where,$modx){
+        $this->where=$where;
+        $q = $this->modx->newQuery('modUser');
+        $q->innerJoin('modUserProfile', 'Profile');
+        $q->where(array(
+            $sf => $this->where,
+        ));
+        $q->select(array(
+            "Profile.*",
+            "modUser.*",
+        ));
+        $s = $q->prepare();
+        $s->execute();
+        //$row = $s->fetchAll(PDO::FETCH_ASSOC);
+        $row = $s->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
 }
