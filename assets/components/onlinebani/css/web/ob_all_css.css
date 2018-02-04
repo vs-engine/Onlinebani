@@ -19,4 +19,18 @@ main {
   min-width: 60px  !important;
   width: 100% !important; }
 
+.mainPageBaniCat .mainPageBaniCat-blocks {
+  margin-bottom: 30px; }
+  .mainPageBaniCat .mainPageBaniCat-blocks h3 a {
+    color: #333333;
+    font: 700 normal 16px/25px "Roboto", sans-serif;
+    height: 45px;
+    display: block;
+    text-align: center; }
+  .mainPageBaniCat .mainPageBaniCat-blocks .intro {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font: 400 normal 14px "Roboto", sans-serif;
+    height: 60px; }
+
 /*# sourceMappingURL=ob_all_css.css.map */

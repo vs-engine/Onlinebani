@@ -10,3 +10,24 @@ main{
   min-width:60px  !important;
   width: 100% !important;
 }
+
+//---
+.mainPageBaniCat{
+  .mainPageBaniCat-blocks{
+    margin-bottom: 30px;
+    h3{
+      a{
+        color:#333333;
+        font: 700 normal 16px/25px $fonts;
+        height: 45px;
+        display: block;
+        text-align: center;
+      }
+    }
+    .intro{
+      @include paddingTB(10px,10px);
+      font: 400 normal 14px $fonts;
+      height:60px;
+    }
+  }
+}

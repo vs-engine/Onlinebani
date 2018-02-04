@@ -9,6 +9,9 @@
 <script type="text/javascript" src="{$_modx->config['onlinebani_assets_url']}js/web/obmodel.js"></script>
 <script type="text/javascript" src="{$_modx->config['onlinebani_assets_url']}js/web/ob.js"></script>
 
+<script type="text/javascript" src="//www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
+<script type="text/javascript" src="modxpush/assets/components/modxpush/js/web/pushmodel.js"></script>
+
 <script type="text/javascript" src="assets/components/ms2guploader/vendor/plupload/js/plupload.full.min.js"></script>
 
 

@@ -36,6 +36,5 @@
         <div class="clearfix"></div>
 </main>
 {include 'Footer'}
-{include 'ob.includes'}
 </body>
 </html>

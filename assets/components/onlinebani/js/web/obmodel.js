@@ -2,19 +2,102 @@ var obModelObj={
     config:{
         groupMenuClass:'.group',
         ajaxURL: '/connector',
+        ajaxURLUP:'/connectorup',
         containerBack: ".containerBack"
     },
     initFunction: function(){
+        //time-picker
+        $("#ff_4").datetimepicker({
+            altField: "#ff_5",
+            minDate: 0,
+            maxDate: 30,
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'HH:mm',
+            stepMinute: 15
+        });
+        $("#ff_6").datetimepicker({
+            altField: "#ff_7",
+            minDate: 0,
+            maxDate: 30,
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'HH:mm',
+            stepMinute: 15
+        });
+
+        //-------
+        if ($("form.userevents-weekend").length>0){
+            if ($("form.userevents-weekend input[name='selday']").val()!=-1){
+                var getVal=$("form.userevents-weekend input[name='seldayVal']").val();
+                $("form.userevents-form").find("input[value='"+getVal+"']").click();
+            }
+            else if ($("form.userevents-weekend input[name='selday']").val()==-1 && $("form.userevents-weekend input[name='seldayVal']").val().length>0){
+                var getVal=$("form.userevents-weekend input[name='seldayVal']").val();
+                $("form.userevents-form").find("input[value='"+getVal+"']").click();
+                $("form.userevents-weekend input[name='seldayVal']").val("");
+            }
+        }
+
+
         this.requiredFields("st",0);
 
         if (this.getUrlVar("action")=="edit" && $("table.editfields").length>0){
             this.tabToForm();
         }
         //---
-        if ($(".nexus_fields .ms2formPlugVal").length>0){
+       /* if ($(".nexus_fields .ms2formPlugVal").length>0){
             this.nexusFields("0","remAdded","0");
-
+        }*/
+    },
+    dtToInt:function(dVal,tVal,bElName){
+        var timestamp = new Date(dVal+" "+tVal).getTime();
+        var timestampSTR=timestamp.toString();//.slice(0,-3)
+        $("input[name='"+bElName+"']").val(timestampSTR.slice(0,-3));
+        ///console.log(timestampSTR.slice(0,-3));
+    },
+    setNewPriceUL: function (pa){
+        var fPrice=0;
+        $("ul.userevents-times-hour").find("input[type='checkbox']:checked").each(function(){
+            var fPrice1=parseFloat($(this).parents("li").find("b.price").text());
+            fPrice+=fPrice1;
+        });
+        if (pa=="s"){
+            var pintq=parseFloat(obModelObj.setNewPriceDIV("r"));
+            var res=pintq+fPrice;
+            $("input#price2").val(res);//attr("value",res);
+            $("input#price2").trigger('blur');
+            UserEvents.Order.getcost();
+            //var jsonstr={"casePar":"setPostVar","key":"price2","value":res};
+            //console.log(jsonstr);
+            //obModelObj.ajax(jsonstr,"nr","elForm");
+            return;
         }
+        else if (pa=="r"){return fPrice;}
+    },
+    setNewPriceDIV: function (pb){
+        var fPriceq=0;
+        if (pb=="s"){
+            $(".form-group").find("input[type='checkbox']:checked").each(function(){
+                var fPrice2=parseFloat($(this).attr("data-price"));
+                fPriceq+=fPrice2;
+            });
+            var pint=parseFloat(obModelObj.setNewPriceUL("r"));
+
+            $("input#price2").val(pint+fPriceq);//attr("value",(pint+fPriceq));
+            $("input#price2").trigger('change');
+            //var jsonstr={"casePar":"setPostVar","key":"price2","value":(pint+fPriceq)};
+            //console.log(jsonstr);
+            //obModelObj.ajax(jsonstr,"nr","elForm");
+            UserEvents.Order.getcost();
+            return;
+        }
+        else if (pb=="r"){
+            $(".form-group").find("input[type='checkbox']:checked").each(function(){
+                var fPrice2=parseFloat($(this).attr("data-price"));
+                fPriceq+=fPrice2;
+            });
+            return fPriceq;
+        }
+
     },
     tabToForm: function(){
         var id=this.getUrlVar("id");
@@ -63,6 +146,64 @@ var obModelObj={
 
         });
     },
+    getChildren:function(getSelVal,idEl){
+        var jsonstr={"casePar":"getChildren","tpl":"ob.tplAddActionRow.tpl","id":getSelVal};
+        //console.log(jsonstr);
+        this.ajax(jsonstr,"backFormEl",idEl);
+    },
+    ajaxFileUpload:function(el){
+        //var data = new FormData();
+
+        $.each($('#imgActionUpl')[0].files, function(i, file) {
+
+        });
+        //data.append('file_v', $('#imgActionUpl')[0].files[0]);
+        /*$.each(el[0].files, function(i, file) {
+            formData.append(file.name, file);
+            console.log(file);
+            str={"imgResource":file};
+        });*/
+        var file_data = $('#imgActionUpl').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('file_v', file_data);
+
+       // var data={'file_v':$('#imgActionUpl')[0].files[0]};
+        //console.log(data);
+        jQuery.ajax({
+            url: this.config.ajaxURLUP,
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            //dataType: 'json',
+            success: function(response) {
+                //response['query']
+                if (response['query']!=-1){
+                    $('#imgActionUpl').after("<img src='"+response['query']+"' alt='' class='img-responsive' />");
+                    $("input[name='imgResource']").attr("value",response['query']);
+                }
+                else{
+                    $('#imgActionUpl').after("<p class='helper' style='color:red;'>картника не загружена</p>");
+                }
+                console.log(response['query']);
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+                if(typeof(console)!='undefined') console.log(jqXHR,textStatus,errorThrown);
+            }
+        });
+        //this.ajaxUpload(formData,"renderImg","elForm");
+
+
+    },
+    chAlias:function(v){
+        var jsonstr={"casePar":"chAlias","val":v};
+        this.ajax(jsonstr,"chFormEl","pagetitle");
+    },
+    ajaxUpload:function(jsonstr,containerBack,thisEl){
+
+    },
     ajax:function(jsonstr,containerBack,thisEl){
         //console.log(jsonstr,this.config.ajaxURL);
         jQuery.ajax({
@@ -71,11 +212,24 @@ var obModelObj={
             async: false,
             cache: false,
             data: jsonstr,
+            //processData: false,
             dataType: 'json',
             success: function(response) {
                 //response['query']
 
                 switch(containerBack){
+                    case "chFormEl":
+                        if (response['query']==1){
+                            $("input[name='pagetitle']").addClass("requiredErr").css({"border":"1px solid red"}).after("<div class='helper'>Такое название уже существует</div>");
+                        }
+                        else{
+                            $("input[name='pagetitle']").removeClass("requiredErr").next("div.helper").remove();
+
+                        }
+                        break;
+                    case "backFormEl":
+                        $(thisEl).html(response['query']);
+                        break;
                     case "console":
                         console.log(response['query']);
                         obModelObj.clickTab("click");
@@ -88,6 +242,18 @@ var obModelObj={
                            // alert(response['query']);
                             $(".form-control[name='"+response['alertField']+"']").addClass("requiredErr");
                         }
+                        break;
+                    case "resource":
+                            if (response['query']=="+"){location.reload()}
+                            else{
+                                alert("Ресурс почему то не создан! Обратитесь в держку");
+                            }
+                        break;
+                    case "nr":
+                        //alert("nores");
+                        break;
+                    case "renderImg":
+                        console.log(response['query']);
                         break;
                     default:
                         $(containerBack).children(".formData").html(response['query']);
@@ -246,6 +412,15 @@ var obModelObj={
             console.log("ok",jsonstr);
         }
     },
+    addActionBath: function(el){
+
+        if (this.requiredFields("cf",el)!=-1){
+            el.find(".form-control").removeClass("requiredErr");
+            var jsonstr=el.serialize();
+            this.ajax(jsonstr,"resource",el);
+            console.log("ok",jsonstr);
+        }
+    },
     nexusFields:function(el,casePar,resField){
         switch(casePar){
             case "add":
@@ -315,12 +490,12 @@ var obModelObj={
     },
     //---table param edit
     tableParamEdit:function (el,action){
-        alert(el+"++"+action);
+        //(el+"++"+action);
         var getClass=el.parents("tr").attr("class");
         var getIndEl=el.parents("tr").attr("data-ind");
         var getV=el.parents("tr").find("td:first input").val();
         var getP=el.parents("tr").find("td:nth-child(2) input").val();
-        alert(getV+"++"+getClass);
+        //alert(getV+"++"+getClass);
         switch (action){
             case "save":
                 $("div."+getClass).find(".select2-search-choice-close[data-ind='"+getIndEl+"']").click();
@@ -380,6 +555,13 @@ var obModelObj={
                     var ii=0;
                     for (iTime=getWDS[0]; iTime<getWDE[0]; iTime++){
                         iTimeL=parseInt(iTime)+1;
+                        console.log(iTime.toString().length);
+                        if (iTime.toString().length==1){
+                            iTime="0"+iTime;
+                        }
+                        if (iTimeL.toString().length==1){
+                            iTimeL="0"+iTimeL;
+                        }
                         tabTd+="<tr class='tableParamEdit_ms2formWorkday_price_list' data-ind='ind_"+ii+"'><td><input value='"+iTime+":00-"+iTimeL+":00' readonly='readonly' class='para1' type='text'></td><td class='priceval_price'><input value='"+getPrice+"' class='para2' type='text'></td></tr>";
                         $("div.tableParamEdit_ms2formWorkday_price_list").find(".select2-search-field>input").val(iTime+":00-"+iTimeL+":00=="+getPrice).blur();
                         ii=ii+1;
@@ -403,6 +585,13 @@ var obModelObj={
                     var ii=0;
                     for (iTimeW=getWES[0]; iTimeW<getWEE[0]; iTimeW++){
                         iTimeLW=parseInt(iTimeW)+1;
+                        console.log(iTimeW.toString().length);
+                        if (iTimeW.toString().length==1){
+                            iTimeW="0"+iTimeW;
+                        }
+                        if (iTimeLW.toString().length==1){
+                            iTimeLW="0"+iTimeLW;
+                        }
                         tabTdW+="<tr class='tableParamEdit_ms2formWeekend_price_list' data-ind='ind_"+ii+"'><td><input value='"+iTimeW+":00-"+iTimeLW+":00' readonly='readonly' class='para1' type='text'></td><td class='priceval_price'><input value='"+getWeekEndPrice+"' class='para2' type='text'></td></tr>";
                         $("div.tableParamEdit_ms2formWeekend_price_list").find(".select2-search-field>input").val(iTimeW+":00-"+iTimeLW+":00=="+getWeekEndPrice).blur();
                         ii=ii+1;

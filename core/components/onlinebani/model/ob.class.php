@@ -52,6 +52,100 @@ class Ob{
         ));*/
         echo json_encode($arrayQuery);
     }
+    public function chAlias($invar,$modx){
+        $this->inVar=$invar;
+        $dd=$this->modx->getCount('modResource', array("alias"=>$this->inVar['val']));
+        if ($dd>0){
+            $arrayQuery['query']=1;
+        }else{
+            $arrayQuery['query']=0;
+        }
+        echo json_encode($arrayQuery);
+    }
+    //--Action bath
+    public function showActionBath($invar,$modx){
+        $this->inVar=$invar;
+        $getParentCity=$modx->getObject("glData",$this->inVar['parent']);
+        //echo($this->inVar['parent']."--1--".$getParentCity->resource."<br/>");
+        $outputOption='';
+        $where = $modx->newQuery('modResource');
+        $where->leftJoin('modTemplateVarResource', 'TemplateVarResources');
+        $where->leftJoin('modTemplateVar', 'tv', "tv.id=TemplateVarResources.tmplvarid");
+        //$where->limit(5);// Лимит
+        $where->where(array(
+            array(
+                'tv.name'   => 'owner_mail', // Имя TV
+                'TemplateVarResources.value'    => $this->inVar['owner_mail'],// Значение TV
+                'parent' => $getParentCity->resource// Родитель
+            )
+        ));
+
+        $resources = $modx->getCollection('modResource',$where);
+        $tplRes="";
+
+        foreach ($resources as $id => $res) {
+            $getBath = $this->modx->getObject('modResource',$id);
+            $reName['nameBath']=$getBath->pagetitle;
+            $tvs=array();
+            if (count($getBath)>0){
+                ##----get bath section
+                $getCountSection=$this->modx->getCount('modResource',array("parent"=>$getBath->id,"published"=>1));
+                ///echo($getCountSection."--".$getBath->id."------<br/>");
+                    if ($getCountSection>0){
+                        $obP=$this->modx->getCollection('modResource',array("parent"=>$getBath->id,"published"=>1));
+                        foreach($obP as $k=>$v) {
+                            //echo($v->pagetitle."<br/>");
+                            if ($modx->getCount('modResource',array("parent"=>$this->inVar['action_resource'],"content"=>$v->id))>0){
+                                $nameSection['nameSection']=$v->pagetitle;
+                                $getAction=$modx->getObject('modResource',array("parent"=>$this->inVar['action_resource'],"content"=>$v->id));
+                                ###--------get ResourceTv
+                                $tv_query = $modx->newQuery('modTemplateVarResource');
+                                $tv_query->leftJoin('modTemplateVar','modTemplateVar',array("modTemplateVar.id = tmplvarid"));
+                                $tv_query->where(array('contentid'=>$getAction->id));
+                                $tv_query->select($modx->getSelectColumns('modTemplateVarResource','modTemplateVarResource','',array('id','tmplvarid','contentid','value')));
+                                $tv_query->select($modx->getSelectColumns('modTemplateVar','modTemplateVar','',array('name')));
+                                $tvars = $modx->getCollection('modTemplateVarResource',$tv_query);
+                                //$tvarsArr=$tvars->toArray();
+                                foreach ($tvars as $tvar) {
+                                    $tvar = $tvar->toArray();
+                                    if (!empty($tvar['value'])){
+                                        //echo($tvs[$tvar['name']] ."=". $tvar['value']."<br/>");
+                                        $tvs[$tvar['name']] = $tvar['value'];
+                                    }else{$tvs[]="";}
+
+                                }
+                                $tplRes.=$this->modx->getChunk($this->inVar['tpl'],array_merge($getAction->toArray(),$nameSection,$tvs));
+                            }
+                        }
+                    }
+                }
+
+        }
+        echo($tplRes);
+    }
+    public function addActionBath($invar,$modx){
+        $this->inVar=$invar;
+        $imgResource = array_shift($this->inVar);
+        ///print_r ($this->inVar);
+        $response =$this->modx->newObject('modResource'); //$this->modx->runProcessor('resource/create', $this->inVar);
+        foreach($this->inVar as $k => $v){
+            $response->set(strval($k), $v);
+        }
+
+        if ($response->save()){
+            //$this->modx->cacheManager->clearCache();
+            $newId = $response->id;
+            $page = $modx->getObject('modResource', $newId);
+            echo('imgResource--'. $imgResource ."----".$newId);
+            $page->setTVValue('imgResource', $imgResource);
+            if ($page->save()){
+                $arrayQuery['query']="+";
+            }else{$arrayQuery['query']="-";}
+        }
+        else{$arrayQuery['query']="-";}
+
+        echo json_encode($arrayQuery);
+    }
     public function getSectionData($invar,$modx){
 
     }
@@ -93,9 +187,10 @@ class Ob{
         $strb=array();
         foreach ($prod as $ke => $res) {
             $output[]= $res->get($this->inVar['field']);
+            asort($output[0]);
             foreach ($output[0] as $k =>$v){
                 $nv=explode("==",$v);
-                $strb[]=['time'=>$nv[0],'title'=>$nv[0]." <br/> ". $nv[1]."руб."];
+                $strb[]=['time'=>$nv[0],'title'=>$nv[0]." <br/> <b class='price'>". $nv[1]."</b> руб."];
             }
         }
 
@@ -275,6 +370,43 @@ class Ob{
                 break;
         }
     }
+    public function setPostVar($invar,$modx){
+        $this->inVar=$invar;
+        $arrayQuery['query']=$_REQUEST[$this->inVar['key']];
+        echo json_encode($arrayQuery);
+        return($_REQUEST[$this->inVar['key']]=$this->inVar['value']);
+    }
+    public function ajaxFileUpload($invar,$modx){
+        $this->inVar=$invar;
+        $myFaile = "";
+        $file_name = "";
+        if (!empty($_FILES['imgResource']['tmp_name'])) {
+            $path = $_SERVER['DOCUMENT_ROOT']."/assets/images/action/".$_FILES['imgResource']['name'];
+            if (copy($_FILES['imgResource']['tmp_name'], $path)){
+                $myFaile = $path;
+                $file_name = $_FILES['imgResource']['name'];
+            }
+        }
+        if(empty($myFaile)){
+            $arrayQuery['query']=$_SERVER['DOCUMENT_ROOT']."/assets/images/action/--------".$_FILES['imgResource'];
+        }
+        else{
+            $arrayQuery['query']=$file_name;
+        }
+        echo json_encode($arrayQuery);
+    }
+    public function getChildren($invar,$modx){
+        $this->inVar=$invar;
+        $getChildren=$this->modx->getCollection("modResource",array("parent"=>$this->inVar["id"],"published"=>1));
+        $outputOption="";
+        foreach ($getChildren as $id => $res) {
+            $outputOption .= '<option value='.$id.'>'.$res->get('pagetitle').'</option>';
+        }
+
+        //echo($this->modx->getChunk($this->inVar['tpl'],array('content_children'=>$outputOption)));
+        $arrayQuery['query']=$outputOption;
+        echo json_encode($arrayQuery);
+    }
     private function getUserInfo($sf,$where,$modx){
         $this->where=$where;
         $q = $this->modx->newQuery('modUser');
@@ -292,4 +424,6 @@ class Ob{
         $row = $s->fetch(PDO::FETCH_ASSOC);
         return $row;
     }
+
+
 }

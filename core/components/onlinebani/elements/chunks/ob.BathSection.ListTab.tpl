@@ -8,7 +8,7 @@
             ,'templates'=>'1==Базовый,2==Дополнительный,6==Отделение'
             ,'template'=>'6'
             ,'allowedFields'=>'workday_price_list,weekend_price_list,weekend_price,weekend_timeend,weekend_timestart,work_days_timeend,work_days_timestart,parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail,admin_bath,dop_options,type_pait,city_region,section_capacity,section_extra_capacity,section_extra_price,sanitary_day,price'
-            ,'requiredFields'=>'parent,pagetitle,content'
+            ,'requiredFields'=>'parent,pagetitle'
             ,'where' => ' { "Data.owner_mail:=":$_modx->user.email } '
         ])}
     {case 'create'}
@@ -18,7 +18,7 @@
             ,'editor'=>'bootstrapMarkdown'
             ,'templates'=>'6==Бани отделения'
             ,'allowedFields'=>'workday_price_list,weekend_price_list,weekend_price,weekend_timeend,weekend_timestart,work_days_timeend,work_days_timestart,parent,pagetitle,content,published,template,hidemenu,tags,tv1,owner_mail,admin_bath,dop_options,type_pait,city_region,section_capacity,section_extra_capacity,section_extra_price,sanitary_day,price'
-            ,'requiredFields'=>'parent,pagetitle,content'
+            ,'requiredFields'=>'parent,pagetitle'
             ,'where' => ' { "Data.owner_mail:=":$_modx->user.email } '
         ])}
     {case 'delete'}
@@ -52,7 +52,7 @@
             'parents'=>1
             ,'showUnpublished'=>1
             ,'tpl'=>'msProducts.row_section.tpl'
-            ,'where' => ' { "Data.owner_mail:=":$_modx->user.email } '
+            ,'where' => ['Data.owner_mail'=>$_modx->user.email]
             ])}
 
             </tbody>

@@ -1,5 +1,5 @@
 <?php
-$lgn=$modx->getLoginUserID();
+/*$lgn=$modx->getLoginUserID();
 $userName = $modx->getUser();
 $user = $modx->getObject('modUser', array('username' => $userName->get('username')));
 if ($lgn==0){
@@ -25,4 +25,4 @@ else if($lgn!='0' && $user->isMember('AdminBath')){
             $url = $modx->makeUrl(17);
             $modx->sendRedirect($url);
     }
-}
+}*/
